@@ -14,10 +14,10 @@
     position: absolute;
 }
 
-/* .output_canvas { */
-    /* -webkit-transform: scaleX(-1); */
-    /* transform: scaleX(-1); */
-/* } */
+.output_canvas {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
 
 .control-panel-entry {
     width: 250px;

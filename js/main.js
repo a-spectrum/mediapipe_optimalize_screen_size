@@ -1,21 +1,6 @@
-const videoElement = document.getElementsByClassName('input_video')[0];
-const canvasElement = document.getElementsByClassName('output_canvas')[0];
-const canvasCtx = document.getElementsByClassName('output_canvas')[0].getContext('2d');
-const controlsElement = document.getElementsByClassName('control_panel')[0];
-const challengeContainer = document.getElementsByClassName('challenge_container')[0];
-
 const controls = window;
 const mpPose = window;
 const fpsControl = new controls.FPS();
-
-// Change the screenSizes Enum here to change the video & canvas size.
-let graphicSize= screenSizes.medium;
-
-challengeContainer.setAttribute("width", graphicSize.width);
-challengeContainer.setAttribute("height", graphicSize.height);
-
-canvasElement.setAttribute("width", graphicSize.width);
-canvasElement.setAttribute("height", graphicSize.height);
 
 function onResults(results) {
     if (!results.poseLandmarks) {
@@ -76,7 +61,7 @@ camera.start();
 
 new controls
     .ControlPanel(controlsElement, {
-        selfieMode: true,
+        selfieMode: false,
         // smoothLandmarks: true,
         // enableSegmentation: false,
         // smoothSegmentation: true,
