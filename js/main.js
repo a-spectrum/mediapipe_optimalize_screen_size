@@ -7,6 +7,9 @@ function onResults(results) {
         return;
     }
 
+    LandmarksArray = results.poseLandmarks;
+    debugCoordinates.innerHTML = JSON.stringify(LandmarksArray[17]);
+
     // Update the frame rate.
     fpsControl.tick();
 
