@@ -1,13 +1,11 @@
 const videoElement = document.getElementsByClassName('input_video')[0];
 const canvasElement = document.getElementsByClassName('output_canvas')[0];
 const canvasCtx = document.getElementsByClassName('output_canvas')[0].getContext('2d');
-const controlsElement =
-    document.getElementsByClassName('control-panel')[0];
+const controlsElement = document.getElementsByClassName('control_panel')[0];
 
 const controls = window;
 const mpPose = window;
 const fpsControl = new controls.FPS();
-
 
 function onResults(results) {
     if (!results.poseLandmarks) {
@@ -31,41 +29,39 @@ function onResults(results) {
     // canvasCtx.globalCompositeOperation = 'destination-atop';
     canvasCtx.drawImage(
         results.image, 0, 0, canvasElement.width, canvasElement.height);
+    // canvasCtx.globalCompositeOperation = 'source-over';
 
-    canvasCtx.globalCompositeOperation = 'source-over';
     drawConnectors(canvasCtx, results.poseLandmarks, POSE_CONNECTIONS,
         { color: '#00FF00', lineWidth: 4 });
     drawLandmarks(canvasCtx, results.poseLandmarks,
         { color: '#FF0000', lineWidth: 2 });
-    canvasCtx.restore();
 
-}
+    canvasCtx.restore();
+};
 
 const pose = new Pose({
     locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
     }
 });
-console.log('Pose made');
+
 pose.setOptions({
-    modelComplexity: 1,
+    modelComplexity: 0,
     smoothLandmarks: true,
-    enableSegmentation: true,
-    smoothSegmentation: true,
+    enableSegmentation: false,
+    smoothSegmentation: false,
     minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.5
 });
-console.log('Options set');
 pose.onResults(onResults);
 
 const camera = new Camera(videoElement, {
     onFrame: async () => {
         await pose.send({ image: videoElement });
     },
-    width: 720,
-    height: 480
+    width: 640,
+    height: 360
 });
-console.log('Camera object set');
 camera.start();
 
 new controls
