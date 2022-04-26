@@ -2,10 +2,20 @@ const videoElement = document.getElementsByClassName('input_video')[0];
 const canvasElement = document.getElementsByClassName('output_canvas')[0];
 const canvasCtx = document.getElementsByClassName('output_canvas')[0].getContext('2d');
 const controlsElement = document.getElementsByClassName('control_panel')[0];
+const challengeContainer = document.getElementsByClassName('challenge_container')[0];
 
 const controls = window;
 const mpPose = window;
 const fpsControl = new controls.FPS();
+
+// Change the screenSizes Enum here to change the video & canvas size.
+let graphicSize= screenSizes.medium;
+
+challengeContainer.setAttribute("width", graphicSize.width);
+challengeContainer.setAttribute("height", graphicSize.height);
+
+canvasElement.setAttribute("width", graphicSize.width);
+canvasElement.setAttribute("height", graphicSize.height);
 
 function onResults(results) {
     if (!results.poseLandmarks) {
@@ -59,20 +69,20 @@ const camera = new Camera(videoElement, {
     onFrame: async () => {
         await pose.send({ image: videoElement });
     },
-    width: 640,
-    height: 360
+    width: graphicSize.width,
+    height: graphicSize.height
 });
 camera.start();
 
 new controls
     .ControlPanel(controlsElement, {
         selfieMode: true,
-        smoothLandmarks: true,
-        enableSegmentation: false,
-        smoothSegmentation: true,
-        minDetectionConfidence: 0.5,
-        minTrackingConfidence: 0.5,
-        effect: 'background',
+        // smoothLandmarks: true,
+        // enableSegmentation: false,
+        // smoothSegmentation: true,
+        // minDetectionConfidence: 0.5,
+        // minTrackingConfidence: 0.5,
+        // effect: 'background',
     })
     .add([
         new controls.StaticText({ title: 'MediaPipe Pose' }),
